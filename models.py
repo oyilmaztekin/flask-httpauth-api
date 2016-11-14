@@ -1,8 +1,10 @@
 # -*- coding: UTF-8 -*-
 # coding:utf-8
-from app import app, db
+from app import db
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
+from passlib.apps import custom_app_context as pwd_context
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -16,6 +18,12 @@ class User(db.Model):
         if tarih is None:
             tarih = datetime.now()
         self.tarih = tarih
+
+    def hash_password(self, password):
+        self.sifre = pwd_context.encrypt(password)
+
+    def verify_password(self, password):
+        return pwd_context.verify(password, self.sifre)
 
     def __repr__(self):
         return '<User %r>' % self.email
