@@ -13,11 +13,12 @@ class User(db.Model):
     tarih = db.Column(db.DateTime())
     alarm = db.relationship('Alarm', backref='user', lazy='dynamic')
 
-    def __init__(self, email, tarih):
+    def __init__(self, email, tarih, sifre):
         self.email = email
         if tarih is None:
             tarih = datetime.now()
         self.tarih = tarih
+        self.sifre = sifre
 
     def hash_password(self, password):
         self.sifre = pwd_context.encrypt(password)
