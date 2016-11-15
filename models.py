@@ -11,12 +11,16 @@ class User(db.Model):
     email = db.Column(db.String(50), nullable=False)
     sifre = db.Column(db.String(40), nullable=False)
     tarih = db.Column(db.DateTime())
+    is_active = db.Column(db.Boolean())
     alarm = db.relationship('Alarm', backref='user', lazy='dynamic')
 
-    def __init__(self, email, tarih, sifre):
+    def __init__(self, email, tarih, sifre, is_active):
         self.email = email
-        if tarih is None:
-            tarih = datetime.now()
+        self.tarih = tarih
+        #if tarih is None:
+            #self.tarih = datetime.now()
+        if is_active is None:
+            self.is_active = True
         self.tarih = tarih
         self.sifre = sifre
 
@@ -25,6 +29,9 @@ class User(db.Model):
 
     def verify_password(self, password):
         return pwd_context.verify(password, self.sifre)
+
+    def get_id(self):
+        return unicode(str(self.id))
 
     def __repr__(self):
         return '<User %r>' % self.email
