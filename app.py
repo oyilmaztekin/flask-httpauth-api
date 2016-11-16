@@ -2,13 +2,15 @@
 # coding:utf-8
 
 from flask import Flask, abort, request, url_for, jsonify
+import json
 from flask_sqlalchemy import SQLAlchemy
 import requests
 from datetime import datetime
-import humanize
-from flask_login import LoginManager, login_user, current_user
+from flask_login import LoginManager, login_user, current_user,login_required
+import sys  
 
-
+reload(sys)  
+sys.setdefaultencoding('utf8')
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -50,12 +52,16 @@ def createUser():
     db.session.commit()
     login_user(user)
 
-    return jsonify({'email':user.email}), 201, {'location':url_for('createUser', id = user.id, _external = True)}
+    return jsonify(
+    	{"mesaj":"Hesabınız oluşturuldu."},
+    	{'email':user.email}
+    	), 201, {'location':url_for('createUser', id = user.id, _external = True)}
 
 
 @login_manager.user_loader
 def load_user(id):
-    return User.query.filter_by(id=id).first()
+    #return User.query.filter_by(id=id).first()
+    return User.query.get(int(id))
     try:
     	pass
     except DoesNotExist:
@@ -77,10 +83,68 @@ def login():
 
 	user.verify_password(sifre)
 	login_user(user)
+	
+	result = []
+	for item in user.alarm:
+	    result.append({
+	        "id": item.id,
+	        "dovizAdi": item.dovizAdi,
+	        "mevcutDeger": item.mevcutDeger,
+	        "beklenenDeger": item.beklenenDeger,
+	        "oranTuru": item.oranTuru,
+	        "tarih": item.tarih
+	    })
+	return jsonify(result)
 
-	return jsonify({'email':user.email}), 201, {'location':url_for('login', id= user.id, _external = True)}
+
+@app.route('/api/alarm-olustur', methods=['POST'])
+@login_required
+def alarm_olustur():
+	
+	dovizAdi = request.json.get('dovizAdi')
+	mevcutDeger = request.json.get('mevcutDeger')
+	beklenenDeger = request.json.get('beklenenDeger')
+	oranTuru = request.json.get('oranTuru')
+	tarih = datetime.now()
+	deviceID = request.json.get('deviceID')
+	user_id = current_user.id
+
+	if dovizAdi is None or beklenenDeger is None or oranTuru is None or user_id is None:
+		abort(400)
+
+	alarm = Alarm(dovizAdi=dovizAdi, mevcutDeger=mevcutDeger, beklenenDeger=beklenenDeger, oranTuru=oranTuru, tarih=tarih,deviceID=deviceID, user_id=user_id)
+
+	db.session.add(alarm)
+	db.session.commit()
+
+	return jsonify({
+		"mesaj": "Alarm başarı ile oluşturuldu"
+		},
+		{
+	        "id": alarm.id,
+	        "dovizAdi": alarm.dovizAdi,
+	        "mevcutDeger": alarm.mevcutDeger,
+	        "beklenenDeger": alarm.beklenenDeger,
+	        "oranTuru": alarm.oranTuru,
+	        "tarih": alarm.tarih
+	    })
 
 
+@app.route('/api/alarm', methods=['GET'])
+@login_required
+def alarm():
+	user = current_user
+	result = []
+	for item in user.alarm:
+	    result.append({
+	        "id": item.id,
+	        "dovizAdi": item.dovizAdi,
+	        "mevcutDeger": item.mevcutDeger,
+	        "beklenenDeger": item.beklenenDeger,
+	        "oranTuru": item.oranTuru,
+	        "tarih": item.tarih
+	    })
+	return jsonify(result)
 
 if __name__ == '__main__':
     app.run()

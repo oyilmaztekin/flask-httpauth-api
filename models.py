@@ -30,6 +30,15 @@ class User(db.Model):
     def verify_password(self, password):
         return pwd_context.verify(password, self.sifre)
 
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
     def get_id(self):
         return unicode(str(self.id))
 
@@ -46,8 +55,14 @@ class Alarm(db.Model):
     deviceID = db.Column(db.String())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self, dovizAdi, tarih):
+    def __init__(self, dovizAdi, tarih, user_id, mevcutDeger, beklenenDeger, oranTuru, deviceID):
         self.dovizAdi = dovizAdi
+        self.mevcutDeger = mevcutDeger
+        self.beklenenDeger = beklenenDeger
+        self.oranTuru = oranTuru
+        self.deviceID = deviceID
+        self.user_id = user_id
+        
         if tarih is None:
             tarih = datetime.now()
         self.tarih = tarih

@@ -1,0 +1,49 @@
+for item in user.alarm:
+		return jsonify({
+			"id": item.id,
+			"dovizAdi": item.dovizAdi,
+			"mevcutDeger": item.mevcutDeger,
+		 	"beklenenDeger": item.beklenenDeger,
+			"oranTuru": item.oranTuru,
+			"tarih": item.tarih
+		})
+
+dovizAdi = request.json.get('dovizAdi')
+	mevcutDeger = request.json.get('mevcutDeger')
+	beklenenDeger = request.json.get('beklenenDeger')
+	oranTuru = request.json.get('oranTuru')
+	tarih = request.json.get('tarih')
+	deviceID = request.json.get('deviceID')
+	user_id = request.json.get('user_id')
+
+
+
+curl kullanımları
+http://stackoverflow.com/questions/8498371/curl-get-and-x-get
+
+login
+
+curl -i -X POST -H "Content-Type: application/json" -d '{"email":"test3@test4.com","sifre":"asdasd"}' http://127.0.0.1:5000/api/login
+
+alarm oluştur 
+curl -i -X POST -H "Content-Type: application/json" -d '{"dovizAdi":"dolar","mevcutDeger":"2.35","beklenenDeger":"3","oranTuru":"buying","deviceID":"","user_id":3}' http://127.0.0.1:5000/api/alarm-olustur
+
+
+Session her loginde değişir
+session=.eJwdjsFqwzAQBX-l7DmHVFYuhh5cpAgbdoONSJAugSau5a10cRpwFPLvFb3OYx7zhPP3Mt4C1L_LfdzAeb5C_YS3L6iBeKpIxehPQ0C-SCf2ydt9OKhmpdxnr66F95lMF13GHdqh7F3A3GxJNTtiH3waZsp6xdQ_kNst2fZBBoVXU4XmyCho9hyi5y6RvUhSnxFNKx33xT8m5PJ30sXT7yS6-WCnFVWbkbVE6wQaLV3--YDXBu63cfnvhwpef2sDRp0.Cw3aRw.PUFG_ZRiScm9pzxyZAjqLE4E87k;
+
+session ile post gönder - userExist 
+ curl -v --cookie "session=.eJwdjsFqwzAQBX-l7DmHVFYuhh5cpAgbdoONSJAugSau5a10cRpwFPLvFb3OYx7zhPP3Mt4C1L_LfdzAeb5C_YS3L6iBeKpIxehPQ0C-SCf2ydt9OKhmpdxnr66F95lMF13GHdqh7F3A3GxJNTtiH3waZsp6xdQ_kNst2fZBBoVXU4XmyCho9hyi5y6RvUhSnxFNKx33xT8m5PJ30sXT7yS6-WCnFVWbkbVE6wQaLV3--YDXBu63cfnvhwpef2sDRp0.Cw3aRw.PUFG_ZRiScm9pzxyZAjqLE4E87k;" -i -X POST http://127.0.0.1:5000/api/userExist 
+
+ session ile post alarm oluştur -- alarmOlustur
+
+  curl -v --cookie "session=.eJwdjsFqwzAQBX-l7DmHVFYuhh5cpAgbdoONSJAugSau5a10cRpwFPLvFb3OYx7zhPP3Mt4C1L_LfdzAeb5C_YS3L6iBeKpIxehPQ0C-SCf2ydt9OKhmpdxnr66F95lMF13GHdqh7F3A3GxJNTtiH3waZsp6xdQ_kNst2fZBBoVXU4XmyCho9hyi5y6RvUhSnxFNKx33xT8m5PJ30sXT7yS6-WCnFVWbkbVE6wQaLV3--YDXBu63cfnvhwpef2sDRp0.Cw3aRw.PUFG_ZRiScm9pzxyZAjqLE4E87k;" -i -X POST -H "Content-Type: application/json" -d '{"dovizAdi":"dolar","mevcutDeger":"2.35","beklenenDeger":"3","oranTuru":"buying","deviceID":"","user_id":3}' http://127.0.0.1:5000/api/alarm-olustur
+
+kullanıcı id boş bırakıp gönderme
+  curl -v --cookie "session=.eJwdjsFqwzAQBX-l7DmHVFYuhh5cpAgbdoONSJAugSau5a10cRpwFPLvFb3OYx7zhPP3Mt4C1L_LfdzAeb5C_YS3L6iBeKpIxehPQ0C-SCf2ydt9OKhmpdxnr66F95lMF13GHdqh7F3A3GxJNTtiH3waZsp6xdQ_kNst2fZBBoVXU4XmyCho9hyi5y6RvUhSnxFNKx33xT8m5PJ30sXT7yS6-WCnFVWbkbVE6wQaLV3--YDXBu63cfnvhwpef2sDRp0.Cw3aRw.PUFG_ZRiScm9pzxyZAjqLE4E87k;" -i -X POST -H "Content-Type: application/json" -d '{"dovizAdi":"dolar","mevcutDeger":"2.35","beklenenDeger":"3","oranTuru":"buying","deviceID":""}' http://127.0.0.1:5000/api/alarm-olustur
+
+alarmları isteme
+curl -v --cookie "session=.eJwdjsFqwzAQBX-l7DmHVFYuhh5cpAgbdoONSJAugSau5a10cRpwFPLvFb3OYx7zhPP3Mt4C1L_LfdzAeb5C_YS3L6iBeKpIxehPQ0C-SCf2ydt9OKhmpdxnr66F95lMF13GHdqh7F3A3GxJNTtiH3waZsp6xdQ_kNst2fZBBoVXU4XmyCho9hyi5y6RvUhSnxFNKx33xT8m5PJ30sXT7yS6-WCnFVWbkbVE6wQaLV3--YDXBu63cfnvhwpef2sDRp0.Cw3aRw.PUFG_ZRiScm9pzxyZAjqLE4E87k;" http://127.0.0.1:5000/api/alarm
+
+alarmları iste session olmadan - auth denetimi varsa reddeder
+curl http://127.0.0.1:5000/api/alarm
