@@ -47,3 +47,9 @@ curl -v --cookie "session=.eJwdjsFqwzAQBX-l7DmHVFYuhh5cpAgbdoONSJAugSau5a10cRpwF
 
 alarmları iste session olmadan - auth denetimi varsa reddeder
 curl http://127.0.0.1:5000/api/alarm
+
+ANDROID
+Server API Key : AIzaSyB6qEoRsYgk77fdtK_EAv_nKApFs1HvOAI
+Sender ID : 342991496543
+
+

@@ -8,6 +8,9 @@ import requests
 from datetime import datetime
 from flask_login import LoginManager, login_user, current_user,login_required
 import sys  
+import re
+
+Email_Regex = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
 
 reload(sys)  
 sys.setdefaultencoding('utf8')
@@ -46,6 +49,9 @@ def createUser():
    
     if User.query.filter_by(email = email).first() is not None:
     	return jsonify({'hata': "bu mail adresi kullanımda"}), 201, {'location':url_for('createUser', id = user.id, _external = True, )}
+
+    if not Email_Regex.match(email):
+    	return jsonify({"hata":"Mail adresi düzgün yazılmadı."})
 
     user.hash_password(sifre)
     db.session.add(user)
