@@ -114,11 +114,13 @@ def alarm_olustur():
 	tarih = datetime.now()
 	deviceID = request.json.get('deviceID')
 	user_id = current_user.id
+	isIOS = request.json.get('isIOS')
+	isAndroid = request.json.get('isAndroid')
 
 	if dovizAdi is None or beklenenDeger is None or oranTuru is None or user_id is None:
 		abort(400)
 
-	alarm = Alarm(dovizAdi=dovizAdi, mevcutDeger=mevcutDeger, beklenenDeger=beklenenDeger, oranTuru=oranTuru, tarih=tarih,deviceID=deviceID, user_id=user_id)
+	alarm = Alarm(dovizAdi=dovizAdi, mevcutDeger=mevcutDeger, beklenenDeger=beklenenDeger, oranTuru=oranTuru, tarih=tarih, deviceID=deviceID, user_id=user_id, isIOS=isIOS, isAndroid=isAndroid)
 
 	db.session.add(alarm)
 	db.session.commit()

@@ -35,9 +35,14 @@ session=.eJwdjsFqwzAQBX-l7DmHVFYuhh5cpAgbdoONSJAugSau5a10cRpwFPLvFb3OYx7zhPP3Mt4
 session ile post gönder - userExist 
  curl -v --cookie "session=.eJwdjsFqwzAQBX-l7DmHVFYuhh5cpAgbdoONSJAugSau5a10cRpwFPLvFb3OYx7zhPP3Mt4C1L_LfdzAeb5C_YS3L6iBeKpIxehPQ0C-SCf2ydt9OKhmpdxnr66F95lMF13GHdqh7F3A3GxJNTtiH3waZsp6xdQ_kNst2fZBBoVXU4XmyCho9hyi5y6RvUhSnxFNKx33xT8m5PJ30sXT7yS6-WCnFVWbkbVE6wQaLV3--YDXBu63cfnvhwpef2sDRp0.Cw3aRw.PUFG_ZRiScm9pzxyZAjqLE4E87k;" -i -X POST http://127.0.0.1:5000/api/userExist 
 
- session ile post alarm oluştur -- alarmOlustur
 
-  curl -v --cookie "session=.eJwdjsFqwzAQBX-l7DmHVFYuhh5cpAgbdoONSJAugSau5a10cRpwFPLvFb3OYx7zhPP3Mt4C1L_LfdzAeb5C_YS3L6iBeKpIxehPQ0C-SCf2ydt9OKhmpdxnr66F95lMF13GHdqh7F3A3GxJNTtiH3waZsp6xdQ_kNst2fZBBoVXU4XmyCho9hyi5y6RvUhSnxFNKx33xT8m5PJ30sXT7yS6-WCnFVWbkbVE6wQaLV3--YDXBu63cfnvhwpef2sDRp0.Cw3aRw.PUFG_ZRiScm9pzxyZAjqLE4E87k;" -i -X POST -H "Content-Type: application/json" -d '{"dovizAdi":"dolar","mevcutDeger":"2.35","beklenenDeger":"3","oranTuru":"buying","deviceID":"","user_id":3}' http://127.0.0.1:5000/api/alarm-olustur
+session ile post alarm oluştur -- alarmOlustur
+
+  curl -v --cookie "session=.eJwdjsFqwzAQBX-l7DmHVFYuhh5cpAgbdoONSJAugSau5a10cRpwFPLvFb3OYx7zhPP3Mt4C1L_LfdzAeb5C_YS3L6iBeKpIxehPQ0C-SCf2ydt9OKhmpdxnr66F95lMF13GHdqh7F3A3GxJNTtiH3waZsp6xdQ_kNst2fZBBoVXU4XmyCho9hyi5y6RvUhSnxFNKx33xT8m5PJ30sXT7yS6-WCnFVWbkbVE6wQaLV3--YDXBu63cfnvhwpef2sDRp0.Cw3aRw.PUFG_ZRiScm9pzxyZAjqLE4E87k;" -i -X POST -H "Content-Type: application/json" -d '{"dovizAdi":"dolar","mevcutDeger":"2.35","beklenenDeger":"3","oranTuru":"buying","deviceID":"","user_id":3,"isAndroid":1}' http://127.0.0.1:5000/api/alarm-olustur
+
+  isPlatform = true küçük harflerle post ediliyor, database kısmına 1 yazıyor!!!
+  ya da isPlatform = 1 şeklinde gönderiliyor, tırnak içine almadan database kısmına da o yazılıyor....
+
 
 kullanıcı id boş bırakıp gönderme
   curl -v --cookie "session=.eJwdjsFqwzAQBX-l7DmHVFYuhh5cpAgbdoONSJAugSau5a10cRpwFPLvFb3OYx7zhPP3Mt4C1L_LfdzAeb5C_YS3L6iBeKpIxehPQ0C-SCf2ydt9OKhmpdxnr66F95lMF13GHdqh7F3A3GxJNTtiH3waZsp6xdQ_kNst2fZBBoVXU4XmyCho9hyi5y6RvUhSnxFNKx33xT8m5PJ30sXT7yS6-WCnFVWbkbVE6wQaLV3--YDXBu63cfnvhwpef2sDRp0.Cw3aRw.PUFG_ZRiScm9pzxyZAjqLE4E87k;" -i -X POST -H "Content-Type: application/json" -d '{"dovizAdi":"dolar","mevcutDeger":"2.35","beklenenDeger":"3","oranTuru":"buying","deviceID":""}' http://127.0.0.1:5000/api/alarm-olustur
@@ -51,5 +56,7 @@ curl http://127.0.0.1:5000/api/alarm
 ANDROID
 Server API Key : AIzaSyB6qEoRsYgk77fdtK_EAv_nKApFs1HvOAI
 Sender ID : 342991496543
+
+onesignal app id: 2c4ad89e-0d71-41a1-960c-682fc7411e98
 
 

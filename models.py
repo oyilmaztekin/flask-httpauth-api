@@ -46,7 +46,7 @@ class User(db.Model):
         return '<User %r>' % self.email
 
 class Alarm(db.Model):
-    id = db.Column(db.Integer,primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     dovizAdi = db.Column(db.String(30))
     mevcutDeger = db.Column(db.String(30))
     beklenenDeger = db.Column(db.String(30))
@@ -54,14 +54,18 @@ class Alarm(db.Model):
     tarih = db.Column(db.DateTime())
     deviceID = db.Column(db.String())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    isIOS = db.Column(db.Boolean)
+    isAndroid = db.Column(db.Boolean)
 
-    def __init__(self, dovizAdi, tarih, user_id, mevcutDeger, beklenenDeger, oranTuru, deviceID):
+    def __init__(self, dovizAdi, tarih, user_id, mevcutDeger, beklenenDeger, oranTuru, deviceID, isIOS, isAndroid):
         self.dovizAdi = dovizAdi
         self.mevcutDeger = mevcutDeger
         self.beklenenDeger = beklenenDeger
         self.oranTuru = oranTuru
         self.deviceID = deviceID
         self.user_id = user_id
+        self.isIOS = isIOS
+        self.isAndroid = isAndroid
         
         if tarih is None:
             tarih = datetime.now()
