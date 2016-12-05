@@ -17,8 +17,8 @@ class User(db.Model):
     def __init__(self, email, tarih, sifre, is_active):
         self.email = email
         self.tarih = tarih
-        #if tarih is None:
-            #self.tarih = datetime.now()
+        if tarih is None:
+            self.tarih = datetime.now()
         if is_active is None:
             self.is_active = True
         self.tarih = tarih

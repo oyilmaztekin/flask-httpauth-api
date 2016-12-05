@@ -21,9 +21,9 @@ dovizAdi = request.json.get('dovizAdi')
 curl kullanımları
 http://stackoverflow.com/questions/8498371/curl-get-and-x-get
 
-login
+login - url i değiştir register olur...
 
-curl -i -X POST -H "Content-Type: application/json" -d '{"email":"test3@test4.com","sifre":"asdasd"}' http://127.0.0.1:5000/api/login
+curl -i -X POST -H "Content-Type: application/json" -d '{"email":"test3@test4.com","sifre":"asdasd","is_active":1}' http://127.0.0.1:5000/api/login
 
 alarm oluştur 
 curl -i -X POST -H "Content-Type: application/json" -d '{"dovizAdi":"dolar","mevcutDeger":"2.35","beklenenDeger":"3","oranTuru":"buying","deviceID":"","user_id":3}' http://127.0.0.1:5000/api/alarm-olustur
@@ -55,8 +55,45 @@ curl http://127.0.0.1:5000/api/alarm
 
 ANDROID
 Server API Key : AIzaSyB6qEoRsYgk77fdtK_EAv_nKApFs1HvOAI
+server api key : NDkwY2UxYTYtN2QzNC00ZWM5LTg3YzAtMWE3YWZhNzM3NDlj
 Sender ID : 342991496543
 
 onesignal app id: 2c4ad89e-0d71-41a1-960c-682fc7411e98
 
+
+
+RESPONSE
+
+HTTP/1.0 201 CREATED
+Content-Type: application/json
+Location: http://127.0.0.1:5000/api/user?id=1
+Set-Cookie: session=.eJwdjsGKwjAURX9leGsXGuOmMIsOiaGF96QlKMlGGK1N3ySbOkKN-O8TZnsu53JecL7Nwz1A9Ts_hhWcpytUL_j4hgqIxy2pGP2pD8gX6cQ-ebsPB1UvlLvs1bXwLpNpo8u4Q9uXvQ2Y6zWpekfsg0_9RFkvmLoncrMm2zzJoPBq3KI5MgqaPIfouU1kL5LUV0TTSMdd8Y8JufyddPH0hkQ7Hey4oGoyspZonUCjpcs_n_BeweM-zP_9sIH3H2r9Rps.CyReyg.kdq7KigH_D7bhorpscGqAnMNDmM; Secure; HttpOnly; Path=/
+Content-Length: 89
+Server: Werkzeug/0.11.11 Python/2.7.11
+Date: Sat, 03 Dec 2016 13:48:58 GMT
+
+{
+  "mesaj": "Hesabınız oluşturuldu", 
+  "session": "127.0.0.1:5000//api/user?id=1"
+}
+
+
+curl --include \
+     --request POST \
+     --header "Content-Type: application/json; charset=utf-8" \
+     --header "Authorization: Basic NDkwY2UxYTYtN2QzNC00ZWM5LTg3YzAtMWE3YWZhNzM3NDlj" \
+     --data-binary "{\"app_id\": \"2c4ad89e-0d71-41a1-960c-682fc7411e98\",
+\"contents\": {\"en\": \"Mesaj Denemesi\"},
+\"included_segments\": [\"All\"]}" \
+     https://onesignal.com/api/v1/notifications
+
+
+     curl --include \
+     --request POST \
+     --header "Content-Type: application/json; charset=utf-8" \
+     --header "Authorization: Basic NDkwY2UxYTYtN2QzNC00ZWM5LTg3YzAtMWE3YWZhNzM3NDlj" \
+     --data-binary "{\"app_id\": \"2c4ad89e-0d71-41a1-960c-682fc7411e98\",
+\"contents\": {\"en\": \"English Message\"},
+\"include_player_ids\": [\"3b427e19-ec54-4c6a-9dbe-0236281d905c\"]}" \
+     https://onesignal.com/api/v1/notifications
 
