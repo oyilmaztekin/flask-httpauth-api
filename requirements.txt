@@ -1,6 +1,8 @@
 alembic==0.8.8
+autopep8==1.2.4
 click==6.6
 Flask==0.11.1
+Flask-HTTPAuth==3.2.1
 Flask-Login==0.4.0
 Flask-SQLAlchemy==2.1
 get==0.0.20
@@ -10,6 +12,7 @@ Mako==1.0.6
 MarkupSafe==0.23
 mimerender==0.6.0
 passlib==1.6.5
+pep8==1.7.0
 post==0.0.12
 public==0.0.37
 PyJWT==1.4.2

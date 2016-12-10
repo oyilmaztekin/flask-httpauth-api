@@ -25,6 +25,9 @@ login - url i değiştir register olur...
 
 curl -i -X POST -H "Content-Type: application/json" -d '{"email":"test3@test4.com","sifre":"asdasd","is_active":1}' http://127.0.0.1:5000/api/login
 
+server
+curl -i -X POST -H "Content-Type: application/json" -d '{"email":"test3@test4.com","sifre":"asdasd","is_active":1}' http://45.55.215.242/api/user
+
 alarm oluştur 
 curl -i -X POST -H "Content-Type: application/json" -d '{"dovizAdi":"dolar","mevcutDeger":"2.35","beklenenDeger":"3","oranTuru":"buying","deviceID":"","user_id":3}' http://127.0.0.1:5000/api/alarm-olustur
 
@@ -77,6 +80,13 @@ Date: Sat, 03 Dec 2016 13:48:58 GMT
   "session": "127.0.0.1:5000//api/user?id=1"
 }
 
+
+last access
+{
+  "email": "test3@asddtest4.com", 
+  "mesaj": "Hesabınız oluşturuldu", 
+  "token": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJKV1QiOiIkNiRyb3VuZHM9NjA2NDA1JGd3NGVIdEMuTWpCOS9ISmIkdW9TckF1dExNcDFyLk43Q09rS0pqM2R3bHZhdGRuOVhEU1JrcmYwMUlOdDNCQWpoSWNEa1hqUGpUUG5zd2V4NUpXdTZxcnVmMTAvQWFITjhZVGdBUC8yMDE2LTEyLTA5IDIwOjA1OjIwLjkzNjQ2OHRlc3QzQGFzZGR0ZXN0NC5jb20xIn0.6JwL6bPaNLTi0hsGQHZt14B_OadlPPQZU13PJWol9wY"
+}
 
 curl --include \
      --request POST \

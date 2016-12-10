@@ -4,7 +4,6 @@
 from flask import Flask, abort, request, url_for, jsonify, session
 import json
 from flask_sqlalchemy import SQLAlchemy
-from models import *
 import requests
 from datetime import datetime
 import sys
@@ -25,12 +24,18 @@ app.config['JSON_AS_ASCII'] = False
 
 db = SQLAlchemy(app)
 
+from models import *
+
 auth = HTTPBasicAuth()
 
 app.config["SECRET_KEY"] = '6cf34ed05e241ac72456425779220bfeaf3557ef8371bed4'
 #app.config["DEBUG"] = True
 #app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SESSION_COOKIE_SECURE'] = True
+
+@app.route('/')
+def index():
+	return "API"
 
 @app.route('/api/user', methods=['POST'])
 def createUser():
@@ -55,18 +60,19 @@ def createUser():
 	
     db.session.add(user)
     db.session.commit()
-    return jsonify({'mesaj': "Hesabınız oluşturuldu", 'token':'JWT ' + token}),  201, {'location':url_for('createUser', id = user.id)}
+    return jsonify({'mesaj': "Hesabınız oluşturuldu", 'email':user.email,'token':'JWT ' + token}),  201, {'location':url_for('createUser', id = user.id)}
 
 @app.route('/api/login', methods=['POST'])
 def login():
-	if current_user.is_authenticated:
-		return jsonify({'mesaj':'Zaten giriş yaptınız'}), 201, {'location':url_for('login', id= user.id, _external = True)}
+	#current_user = getpass.getuser()
 	
 	email = request.json.get('email')
 	sifre = request.json.get('sifre')
+	tarih = datetime.now()
 
 	user = User.query.filter_by(email=email).first()
-	
+	token = jwt.encode({'JWT': user.sifre+str(tarih)+email}, 'secret', algorithm='HS256')
+
 	if email is None or sifre is None:
 		return jsonify({'hata':'kullanıcı adı veya şifre hatası'}), 201, {'location':url_for('login', id= user.id, _external = True)}
 
@@ -82,8 +88,17 @@ def login():
 	        "oranTuru": item.oranTuru,
 	        "tarih": item.tarih
 	    })
-	return jsonify(result, {'ses':session['_id']})
 
+	#eğer alarm oluşturulmadıysa
+	if result== []:
+		return jsonify({'email':user.email,'mesaj':'başarı ile giriş yapıldı','bilgi':'Henüz alarm oluşturulmamış.','token':'JWT ' + token})
+
+	return jsonify(result, {'email':user.email,'mesaj':'başarı ile giriş yapıldı','token':'JWT ' + token})
+
+
+@app.route('/api/token', methods=['POST'])
+def get_token():
+	return jsonify(result, {'email':user.email,'mesaj':'başarı ile giriş yapıldı','token':'JWT ' + token})
 
 @app.route('/api/alarm-olustur', methods=['POST'])
 @auth.login_required

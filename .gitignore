@@ -1,5 +1,4 @@
-# OS generated files #
-######################
+
 .DS_Store
 .DS_Store?
 ._*
@@ -7,6 +6,12 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+CertificateSigningRequest.certSigningRequest
+google-services.json
+piyasa_api
+piyasa_ap_2
+piyasa_api_yedek
+sample.txt
 
 # Packages #
 ############
